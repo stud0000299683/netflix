@@ -1,6 +1,5 @@
 package ru.utmn.chamortsev.netflix.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,14 +24,14 @@ public class NetflixController {
 
 
     @GetMapping
-    public Collection<Netflix> getAll() {
-        return NetflixService.getAll();
+    public Iterable<Netflix> getAll() {
+        return netflixService.getAll();
     }
 
 
     @GetMapping("/{show_id}")
-    public static Netflix getOne(@PathVariable("show_id") String show_id) {
-        return NetflixService.getOne(show_id);
+    public Netflix getOne(@PathVariable("show_id") String show_id) {
+        return netflixService.getOne(show_id);
     }
 
 //    @ResponseStatus(HttpStatus.CREATED)
@@ -50,12 +49,12 @@ public class NetflixController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping
     public void update(@RequestBody Netflix netflix) {
-        NetflixService.update(netflix);
+        netflixService.update(netflix);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{show_id}")
     public void delete(@PathVariable("show_id") String show_id) {
-        NetflixService.delete(show_id);
+        netflixService.delete(show_id);
     }
 }
