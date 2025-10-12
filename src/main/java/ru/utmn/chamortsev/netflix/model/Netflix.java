@@ -1,26 +1,29 @@
 package ru.utmn.chamortsev.netflix.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
+
 import java.time.LocalDate;
-import java.util.List;
+
 
 @Getter
 @Setter
+@Entity
 public class Netflix {
-    private String show_id;
-    private String type;
-    private String title;
-    private String directors;
-    private String cast;
-    private String country;
-    private LocalDate date_added;
-    private Integer release_year;
-    private String rating;
-    private String duration;
-    private String listed_in;
-    private String description;
-
+    @Id     private String show_id;
+    @Column private String type;
+    @Column private String title;
+    @Column private String directors;
+    @Column(name="cast_members") private String cast;
+    @Column private String country;
+    @Column private LocalDate date_added;
+    @Column private Integer release_year;
+    @Column private String rating;
+    @Column private String duration;
+    @Column private String listed_in;
+    @Column private String description;
 }

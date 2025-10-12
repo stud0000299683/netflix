@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.StreamSupport;
 
-@Service
+//@Service
 public class NetflixService {
 
     NetflixCsvRepository repository;
