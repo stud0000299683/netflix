@@ -4,6 +4,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 import jakarta.annotation.PostConstruct;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import ru.utmn.chamortsev.netflix.model.Netflix;
 import ru.utmn.chamortsev.netflix.service.NetflixService;
@@ -16,7 +17,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-@Repository
+@Repository("CsvRepository")
+@Profile({"CsvEngine", "JdbcEngine"})
 public class NetflixCsvRepository implements CommonRepository<Netflix> {
 
 

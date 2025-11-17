@@ -1,8 +1,7 @@
 package ru.utmn.chamortsev.netflix.repository;
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSourceExtensionsKt;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Repository;
@@ -13,6 +12,8 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Repository
+@Profile("JdbcEngine")
+@Primary
 public class NetflixJdbcRepository implements CommonRepository<Netflix> {
 
     private static final String SQL_INSERT = """

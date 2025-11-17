@@ -4,17 +4,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.utmn.chamortsev.netflix.model.Netflix;
-import ru.utmn.chamortsev.netflix.service.NetflixJpaService;
+
+import ru.utmn.chamortsev.netflix.service.NetflixServiceInterface;
 
 
 @RestController
 @RequestMapping("/api/netflix")
 public class NetflixController {
-    //private final NetflixService netflixService;
 
-    private final NetflixJpaService netflixService;
+    private final NetflixServiceInterface netflixService;
 
-    public NetflixController(NetflixJpaService netflixService) {
+    public NetflixController(NetflixServiceInterface netflixService) {
         this.netflixService = netflixService;
     }
 
