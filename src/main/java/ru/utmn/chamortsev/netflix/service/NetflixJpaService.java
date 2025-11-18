@@ -1,5 +1,6 @@
 package ru.utmn.chamortsev.netflix.service;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,18 +16,9 @@ import java.util.stream.StreamSupport;
 @Profile("JpaEngine")
 public class NetflixJpaService  implements NetflixServiceInterface{
     private final NetflixJpaRepository repository;
-    private final NetflixCsvRepository csvRepository;
 
-    public NetflixJpaService(NetflixJpaRepository repository, NetflixCsvRepository csvRepository){
+    public NetflixJpaService(NetflixJpaRepository repository){
         this.repository = repository;
-        this.csvRepository = csvRepository;
-
-        // Инициализация данных из CSV репозитория, если JPA репозиторий пустой
-        if(repository.count() == 0 && csvRepository.count() > 0){
-            Iterable<Netflix> all = csvRepository.findAll();
-            Collection<Netflix> collection = StreamSupport.stream(all.spliterator(), false).toList();
-            repository.saveAll(collection);
-        }
     }
 
     public Iterable<Netflix> getAll(){

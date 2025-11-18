@@ -1,5 +1,6 @@
 package ru.utmn.chamortsev.netflix.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +19,8 @@ public class NetflixController {
         this.netflixService = netflixService;
     }
 
-//    @GetMapping("/hello")
-//    public String hello() {
-//        return netflixService.hello();
-//    }
 
-
+    @Operation(summary = "Возвращает все записи", description = "Нет пагинации учтите это при запуске")
     @GetMapping
     public Iterable<Netflix> getAll() {
         return netflixService.getAll();
