@@ -47,4 +47,5 @@ public class NetflixJpaService  implements NetflixServiceInterface{
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Запись отсутствует");
         repository.deleteById(show_id);
     }
+
 }
