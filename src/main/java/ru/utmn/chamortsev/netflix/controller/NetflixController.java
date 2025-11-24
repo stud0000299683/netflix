@@ -8,6 +8,8 @@ import ru.utmn.chamortsev.netflix.model.Netflix;
 
 import ru.utmn.chamortsev.netflix.service.NetflixServiceInterface;
 
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api/netflix")
@@ -32,17 +34,13 @@ public class NetflixController {
         return netflixService.getOne(show_id);
     }
 
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @PostMapping
-//    public void add(@RequestBody Netflix netflix) {
-//        NetflixService.add(netflix);
-//    }
 
     @PostMapping
     public ResponseEntity<Netflix> add(@RequestBody Netflix netflix){
         Netflix e = netflixService.add(netflix);
         return new ResponseEntity<>(e, HttpStatus.CREATED);
     }
+
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping
@@ -55,4 +53,30 @@ public class NetflixController {
     public void delete(@PathVariable("show_id") String show_id) {
         netflixService.delete(show_id);
     }
+
+
+    @Operation(summary = "Средний год выпуска контента")
+    @GetMapping("/avg-release-year")
+    public Double avgReleaseYear() {
+        return netflixService.avgReleaseYear();
+    }
+
+    @Operation(summary = "Количество фильмов")
+    @GetMapping("/count-movies")
+    public Long countMovies() {
+        return netflixService.countMovies();
+    }
+
+    @Operation(summary = "Количество TV шоу")
+    @GetMapping("/count-tv-shows")
+    public Long countTVShows() {
+        return netflixService.countTVShows();
+    }
+
+    @Operation(summary = "Общая статистика контента")
+    @GetMapping("/content-stats")
+    public Map<String, Object> getContentStats() {
+        return netflixService.getContentStats();
+    }
+
 }

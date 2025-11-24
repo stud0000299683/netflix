@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.server.ResponseStatusException;
 import ru.utmn.chamortsev.netflix.model.Netflix;
 import ru.utmn.chamortsev.netflix.repository.CommonRepository;
@@ -63,6 +64,45 @@ public class NetflixService implements NetflixServiceInterface{
         if (!repository.exsists(show_id))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Запись отсутствует");
         repository.delete(show_id);
+    }
+
+    @Override
+    public Double avgReleaseYear() {
+        var targetStream = StreamSupport.stream(repository.findAll().spliterator(), false);
+        var result = targetStream.mapToDouble(Netflix::getRelease_year).average().orElse(Double.NaN);
+        return result;
+    }
+
+    @Override
+    public Long countMovies() {
+        var targetStream = StreamSupport.stream(repository.findAll().spliterator(), false);
+        return targetStream.filter(e -> "Movie".equalsIgnoreCase(e.getType())).count();
+    }
+
+    @Override
+    public Long countTVShows() {
+        var targetStream = StreamSupport.stream(repository.findAll().spliterator(), false);
+        return targetStream.filter(e -> "TV Show".equalsIgnoreCase(e.getType())).count();
+    }
+
+    @Override
+    public Map<String, Object> getContentStats() {
+        var targetStream = StreamSupport.stream(repository.findAll().spliterator(), false);
+        var moviesCount = targetStream.filter(e -> "Movie".equalsIgnoreCase(e.getType())).count();
+
+        targetStream = StreamSupport.stream(repository.findAll().spliterator(), false);
+        var tvShowsCount = targetStream.filter(e -> "TV Show".equalsIgnoreCase(e.getType())).count();
+
+        targetStream = StreamSupport.stream(repository.findAll().spliterator(), false);
+        var avgYear = targetStream.mapToDouble(Netflix::getRelease_year).average().orElse(Double.NaN);
+
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("totalMovies", moviesCount);
+        stats.put("totalTVShows", tvShowsCount);
+        stats.put("avgReleaseYear", avgYear);
+        stats.put("totalContent", moviesCount + tvShowsCount);
+
+        return stats;
     }
 
 }
